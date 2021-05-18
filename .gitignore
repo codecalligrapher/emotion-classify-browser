@@ -1,0 +1,10 @@
+/.vscode
+/node_modules
+/test
+/traing
+/xception2
+*.tar.gz
+*.csv
+*.hdf5
+*.zip
+*.bib

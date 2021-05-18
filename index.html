@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+</head>
+<style>
+    body {
+      margin: 25px;
+    }
+  
+    #main {
+      position: relative;
+      margin: 50px 0;
+    }
+  
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  
+    #description {
+      margin-top: 20px;
+      width: 600px;
+    }
+  
+    #description-title {
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+<body>
+    <!-- <p>Test</p> -->
+
+    <!-- <img src='test/angry/PrivateTest_88305.jpg' id='img' width="48" height="48"> -->
+
+   
+        <!-- <script type="module" src="train.js"></script> -->
+
+    <div id="main">
+        <video id="video" playsinline style="
+              -webkit-transform: scaleX(-1);
+              transform: scaleX(-1);
+              width: auto;
+              height: auto;
+              ">
+        </video>
+        <div id="pred"></div>
+        <canvas id="face" style="position: absolute; top: 500; border: solid 1px;"></canvas>
+        <canvas id="output"></canvas>
+        <canvas id="videostream" style="visibility: hidden"></canvas>
+<!-- 
+        <video id="video" playsinline style="
+              -webkit-transform: scaleX(-1);
+              transform: scaleX(-1);
+              visibility: hidden;
+              width: auto;
+              height: auto;
+              ">
+        </video> -->
+    </div>
+
+    
+</body>
+<script src="script.js"></script> 
+</html>
