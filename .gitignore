@@ -1,7 +1,7 @@
 /.vscode
 /node_modules
 /test
-/traing
+/train
 /xception2
 *.tar.gz
 *.csv
