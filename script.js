@@ -1,11 +1,66 @@
 let model, streamvideo, streamctx, ctx, videoWidth, videoHeight, video, canvas, facecanvas, facectx, image;
+let article, message;
 let current = new Date();
 
-const state = {
-  backend: "wasm",
-};
+let update = 0;
+const updateInt = 10;
+
+
+async function setFrameColor(tensor) {
+  let arg = tf.argMax(tensor.as1D());
+  arg = await arg.array(0)
+
+  let disp;
+  console.log(arg);
+
+  article.classList.remove('is-danger')
+  article.classList.remove('is-primary')
+  article.classList.remove('is-link')
+  article.classList.remove('is-info')
+  article.classList.remove('is-success')
+  article.classList.remove('is-warning')
+  switch(arg) {
+    case 0:
+      disp = "Angry";
+      color = "is-danger";
+      break;
+    case 1:
+      disp = "Disgusted";
+      color = 'is-info';
+      break;
+    case 2:
+      disp = "Fear";
+      color = 'is-warning'
+      break
+    case 3:
+      disp = "Happy";
+      color = 'is-success';
+      break
+    case 4:
+      disp = "Sad";
+      color = 'is-info'
+      break;
+    case 5:
+      disp = "Surprise";
+      color = 'is-warning'
+      break
+    case 6:
+      disp = "Neutral";
+      break
+    default:
+      disp = "looking...";
+      break;
+  }
+  message.innerHTML = disp;
+  article.classList.add(color);
+
+  delete tensor1d
+  delete arg
+}
 
 async function setupCamera() {
+  article = document.getElementById("vidarticle");
+  message = document.getElementById("message");
 
   video = document.getElementById("video");
 
@@ -25,6 +80,7 @@ async function setupCamera() {
 
 const renderPrediction = async () => {
   const returnTensors = false;
+  const draw = false;
   const flipHorizontal = false;
   const annotateBoxes = false;
   const predictions = await model.estimateFaces(
@@ -36,6 +92,7 @@ const renderPrediction = async () => {
  
 
   if (predictions.length > 0) {
+    update++;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < predictions.length; i++) {
@@ -51,11 +108,14 @@ const renderPrediction = async () => {
       const end = predictions[i].bottomRight;
       const size = [end[0] - start[0], end[1] - start[1]];
  
-      ctx.beginPath();
-      ctx.lineWidth = "6";
-      ctx.strokeStyle = "red";
-      ctx.rect(640-end[0], start[1], size[0], size[1]);
-      ctx.stroke();
+      
+      if (draw) {
+        ctx.beginPath();
+        ctx.lineWidth = "6";
+        ctx.strokeStyle = "red";
+        ctx.rect(640-end[0], start[1], size[0], size[1]);
+        ctx.stroke();
+      }
 
       frame = video;
       streamctx.drawImage(video, 0, 0)
@@ -68,7 +128,13 @@ const renderPrediction = async () => {
         48, 48, // dWidth, dHeight
       )
 
-      await classify(facecanvas);
+      if (update%updateInt === 0) {
+        update = 0;
+        const res = await classify(facecanvas);
+        setFrameColor(res);
+        delete res;
+      }
+
 
       if (annotateBoxes) {
         const landmarks = predictions[i].landmarks;
@@ -83,7 +149,6 @@ const renderPrediction = async () => {
     }
   }
 
-  // window.requestAnimationFrame(renderPrediction);
   video.requestVideoFrameCallback(renderPrediction)
 };
 
@@ -126,13 +191,13 @@ async function load() {
 }
 
 async function classify(img) {
-  
   const tensor = await tf.browser.fromPixels(img,1).expandDims(0)
   const offset = tf.scalar(127.5);
   // Normalize the image from [0, 255] to [-1, 1].
   const normalized = tensor.sub(offset).div(offset);
-  const res =  await emotimodel.predict(normalized).array();
-  document.getElementById("pred").innerHTML = res;
+  const res =  await emotimodel.predict(normalized);
+  document.getElementById("pred").innerHTML = res.as1D();
+  return res;
 }
 
 load();

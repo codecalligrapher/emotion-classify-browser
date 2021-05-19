@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="">
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
 </head>
 <style>
     body {
@@ -36,36 +37,35 @@
       font-size: 18px;
     }
   </style>
-<body>
-    <!-- <p>Test</p> -->
 
-    <!-- <img src='test/angry/PrivateTest_88305.jpg' id='img' width="48" height="48"> -->
-
-   
-        <!-- <script type="module" src="train.js"></script> -->
-
-    <div id="main">
-        <video id="video" playsinline style="
-              -webkit-transform: scaleX(-1);
-              transform: scaleX(-1);
-              width: auto;
-              height: auto;
-              ">
-        </video>
-        <div id="pred"></div>
-        <canvas id="face" style="position: absolute; top: 500; border: solid 1px;"></canvas>
-        <canvas id="output"></canvas>
-        <canvas id="videostream" style="visibility: hidden"></canvas>
-<!-- 
-        <video id="video" playsinline style="
-              -webkit-transform: scaleX(-1);
-              transform: scaleX(-1);
-              visibility: hidden;
-              width: auto;
-              height: auto;
-              ">
-        </video> -->
+    <div class="container is-widescreen">
+      <article id="vidarticle" class="message">
+        <div id="message" class="message-header">
+          <p>Looking....</p>
+          
+        </div>
+        <div class="message-body">
+          <div id="main" style="display:flex; justify-content: center; flex-direction: column">
+            <video id="video" playsinline style="
+                  -webkit-transform: scaleX(-1);
+                  display: flex;
+                  transform: scaleX(-1);
+        
+                  width: auto;
+                  height: auto;
+                  ">
+            </video>
+            <div id="pred" style="visibility: hidden;"></div>
+            <canvas id="face" style="position: absolute; top: 500; border: solid red 3px; visibility: hidden;"></canvas>
+            <canvas id="output"></canvas>
+            <canvas id="videostream" style="visibility: hidden"></canvas>
+          </div>
+        </div>
+      
+      </article>
     </div>
+
+  
 
     
 </body>
