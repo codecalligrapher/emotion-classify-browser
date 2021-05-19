@@ -4,6 +4,6 @@
 - [x] Center webcam stream
 - [x] Show percentage emotion using output tensor
 - [x] Incorporate Bulma
-- [ ] Transition between colour changes 
+- [x] Transition between colour changes 
 - [ ] Clean documentation
 - [ ] Push to heroku

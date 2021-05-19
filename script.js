@@ -3,7 +3,7 @@ let article, message;
 let current = new Date();
 
 let update = 0;
-const updateInt = 10;
+const updateInt = 30;
 
 
 async function setFrameColor(tensor) {
